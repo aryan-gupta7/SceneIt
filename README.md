@@ -53,7 +53,6 @@ SceneIt provides a centralized platform for event management and discovery. The 
 ### 4. Setup Database
 Make sure your system has a database system install, may it be MySQL, SQLite or PostgreSQL. After setting up, add the DATABASE_URI to the `main.py`.
 ### 5. You are good to go.
-While running for the first time, you can go to localhost:port/update_events to fetch the events.
 
 
 ## Usage
