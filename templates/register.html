@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+    <title>Register</title>
+    <style>
+        *{
+            font-family: "Afacad Flux", sans-serif;
+        }
+        :root {
+            --bg-primary: #121212;
+            --bg-secondary: #1E1E1E;
+            --bg-card: #2A2A2A;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B0B0B0;
+            --accent-1: #fe4b5d;  /* Pink color for buttons */
+            --accent-2: #29aadd;  /* Light blue color for headings */
+            --accent-3: #8AFF50;  /* Bright green for tags */
+            --input-bg: #3D3D3D;
+            --error-color: #ff3d67;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: var(--bg-card);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            width: 80%;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+        }
+        .form-container {
+            flex: 1;
+            padding-right: 20px;
+        }
+        .image-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .large-image {
+            width: 100%;
+    height: 100%;
+    background-color: var(--input-bg);
+    margin-bottom: 20px;
+    border-radius: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+        }
+        .large-image h2 {
+    color: var(--text-secondary);
+    font-size: 18px;
+    font-weight: normal;
+    margin-top: 0;
+}
+        .small-images {
+            display: flex;
+            justify-content: space-between;
+            height: 30%;
+        }
+        .small-image {
+            width: 48%;
+            background-color: var(--bg-card);
+            border-radius: 6px;
+        }
+        .copyright {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: var(--accent-2);
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--accent-2);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--bg-card);
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: var(--accent-2);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(127, 219, 255, 0.2);
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-1);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        input[type="submit"]:hover {
+            background-color: var(--accent-2);
+        }
+        input[type="submit"]:active {
+            transform: translateY(1px);
+        }
+        .flash {
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .success { background-color: var(--accent-3); color: var(--bg-primary); }
+        .danger { background-color: var(--error-color); color: var(--bg-primary); }
+        .errors {
+            color: var(--error-color);
+            list-style-type: none;
+            padding: 0;
+            margin-left: 5px;
+            margin-right: 5px;
+            font-size: 12px;
+        }
+        p {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        a {
+            color: var(--accent-2);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: var(--accent-1);
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                width: 90%;
+            }
+            .form-container {
+                padding-right: 0;
+                margin-bottom: 30px;
+            }
+            .image-container {
+                display: none;
+            }
+        }
+        .available { color: #4CAF50; }
+        .unavailable { color: #f44336; }
+        .password-match { color: #4CAF50; }
+        .password-mismatch { color: #f44336; }
+        .password-invalid { color: #f44336; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Register</h1>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form method="POST" action="{{ url_for('register') }}" id="registerForm">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.full_name.label }}
+                    {{ form.full_name(placeholder="Enter your full name") }}
+                    {% if form.full_name.errors %}
+                        <ul class="errors">
+                            {% for error in form.full_name.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.roll_no.label(text="Username") }}
+                    {{ form.roll_no(placeholder="Enter your enrollment number") }}
+                    <span id="usernameAvailability"></span>
+                    {% if form.roll_no.errors %}
+                        <ul class="errors">
+                            {% for error in form.roll_no.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label }}
+                    {{ form.password(placeholder="Enter your password") }}
+                    <span id="passwordValidity"></span>
+                    {% if form.password.errors %}
+                        <ul class="errors">
+                            {% for error in form.password.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.confirm_password.label }}
+                    {{ form.confirm_password(placeholder="Confirm your password") }}
+                    <span id="passwordMatch"></span>
+                    {% if form.confirm_password.errors %}
+                        <ul class="errors">
+                            {% for error in form.confirm_password.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(value="Sign Up") }}
+                </div>
+            </form>
+            <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+            <div class="copyright">copyright A3C</div>
+        </div>
+        <div class="image-container">
+            <div class="large-image">
+                <img src="static/images/logo.png.jpg" alt="SceneIt Logo" style="border-radius: 5%;max-width: 50%; height: auto;">
+                <h2 style="margin: 30px;">Your Onestop solution for all your event managing needs!</h2>
+            </div>
+            <!-- <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div> -->
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var usernameTimer;
+            $('#roll_no').on('input', function() {
+                clearTimeout(usernameTimer);
+                usernameTimer = setTimeout(function() {
+                    var username = $('#roll_no').val();
+                    if (username.length > 0) {
+                        if (!/^\d{8}$/.test(username)) {
+                            $('#usernameAvailability').text('Username must be exactly 8 digits').removeClass('available').addClass('unavailable');
+                        } else {
+                            $.getJSON("{{ url_for('check_username') }}", {username: username}, function(data) {
+                                if (data.available) {
+                                    $('#usernameAvailability').text('Username is available').removeClass('unavailable').addClass('available');
+                                } else {
+                                    $('#usernameAvailability').text('Username is not available').removeClass('available').addClass('unavailable');
+                                }
+                            });
+                        }
+                    } else {
+                        $('#usernameAvailability').text('');
+                    }
+                }, 500);
+            });
+
+            function validatePassword(password) {
+                var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                return regex.test(password);
+            }
+
+            $('#password').on('input', function() {
+                var password = $(this).val();
+                if (password.length > 0) {
+                    if (validatePassword(password)) {
+                        $('#passwordValidity').text('Password is valid').removeClass('password-invalid').addClass('password-match');
+                    } else {
+                        $('#passwordValidity').text('Password must be at least 8 characters long and include uppercase, lowercase, number, and special character').removeClass('password-match').addClass('password-invalid');
+                    }
+                } else {
+                    $('#passwordValidity').text('');
+                }
+                checkPasswordMatch();
+            });
+
+            $('#confirm_password').on('input', function() {
+                checkPasswordMatch();
+            });
+
+            function checkPasswordMatch() {
+                var password = $('#password').val();
+                var confirmPassword = $('#confirm_password').val();
+                if (password.length > 0 && confirmPassword.length > 0) {
+                    if (password === confirmPassword) {
+                        $('#passwordMatch').text('Passwords match').removeClass('password-mismatch').addClass('password-match');
+                    } else {
+                        $('#passwordMatch').text('Passwords do not match').removeClass('password-match').addClass('password-mismatch');
+                    }
+                } else {
+                    $('#passwordMatch').text('');
+                }
+            }
+
+            $('#registerForm').on('submit', function(e) {
+                var password = $('#password').val();
+                var confirmPassword = $('#confirm_password').val();
+                if (!validatePassword(password) || password !== confirmPassword) {
+                    e.preventDefault();
+                    alert('Please ensure your password is valid and matches the confirmation.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SceneIt!</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+   <style>
+        /* *{
+            font-family: "Afacad Flux", sans-serif;
+
+        } */
+        *{
+            font-family: "Lato", sans-serif;
+
+        }
+        :root {
+            --bg-primary: #121212;
+            --bg-secondary: #1E1E1E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B0B0B0;
+            --accent-1: #fe4b5d;
+            --accent-2: #7FDBFF;
+            --accent-3: #7FDBFF;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --card-title-max-lines: 3; /* New variable for controlling title lines */
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: var(--bg-secondary);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            color: var(--accent-1);
+            font-size: 1.5em;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-logo {
+            height: 30px;
+            width: auto;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+
+        .navbar-brand span {
+            color: var(--accent-1);
+        }
+
+        .navbar-brand:hover span {
+            color: var(--accent-2);
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-menu a:hover {
+            color: var(--accent-1);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            background-color: var(--text-primary);
+            height: 3px;
+            width: 25px;
+            margin: 2px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .hamburger:hover span {
+            background-color: var(--accent-1);
+        }
+
+        .row-container {
+            margin-bottom: 30px;
+        }
+
+        .row-content {
+            overflow-x: auto;
+            padding-bottom: 15px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* .row-heading {
+            color: var(--accent-2);
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--accent-2);
+        } */
+
+        .row {
+            display: flex;
+            gap: 20px;
+            padding: 10px 0;
+            width: max-content;
+        }
+
+        .card {
+            background-color: var(--bg-secondary);
+            border-radius: 15px;
+            overflow: hidden;
+            width: 300px; /* Increased from 250px */
+            min-height: 250px; /* Changed from fixed height to min-height */
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-image {
+            background-color: #2A2A2A;
+            height: 100px;
+            min-height: 100px; /* Added min-height */
+            position: relative;
+        }
+
+        .tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--accent-3);
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            color: var(--bg-primary);
+        }
+
+        .card-info {
+            padding: 20px; /* Increased padding */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1; /* Allow it to grow and fill available space */
+            color: var(--text-primary);
+        }
+
+        .card-title-row {
+            margin-bottom: 15px; /* Increased margin */
+        }
+
+        .card-title-row h3 {
+            font-size: 1.3em;
+            margin: 0 0 10px 0;
+            color: var(--accent-1);
+            display: -webkit-box;
+            -webkit-line-clamp: var(--card-title-max-lines);
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.2em; /* Adjust as needed */
+            max-height: calc(1.2em * var(--card-title-max-lines)); /* Adjust line-height if changed above */
+        }
+
+        .category {
+            background-color: var(--accent-2);
+            color: var(--bg-primary);
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+        }
+
+        .card-details {
+            margin-bottom: 15px; /* Increased margin */
+        }
+
+        .event-time {
+            margin-bottom: 10px; /* Added margin */
+        }
+
+        .event-date {
+            font-size: 0.9em; /* Increased font size */
+        }
+
+        .attendees {
+            padding: 5px 10px; /* Increased padding */
+            margin-right: 8px; /* Added margin */
+        }
+
+        .people-icon {
+            width: 16px; /* Increased size */
+            height: 16px;
+        }
+
+        .attendees-count {
+            font-size: 1em; /* Increased font size */
+        }
+
+        .interested-button {
+            padding: 10px 20px; /* Increased padding */
+            font-size: 1em; /* Increased font size */
+            margin-top: auto; /* Push button to bottom */
+        }
+
+        footer {
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 20px 0;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-content p {
+            margin: 5px 0;
+        }
+
+        .footer-content .copyright {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-content .copyright span {
+            margin-right: 5px;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .expanded-card {
+            background-color: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 25px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 80vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+            overflow-y: auto;
+            color: var(--text-primary);
+            gap: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            color: var(--accent-1);
+            margin: 0;
+            flex-grow: 1;
+            font-weight: bold;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 10px;
+            margin-right: 10px;
+        }
+
+        .card-category, .card-tag {
+            background-color: var(--accent-2);
+            color: var(--bg-primary);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+
+        .card-subheader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
+        .event-id, .event-date,.event-location {
+            color: var(--text-secondary);
+            font-size: 0.8em;
+        }
+
+        .card-description {
+            background-color: var(--bg-primary);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card-description h4 {
+            margin-top: 0;
+            color: var(--text-primary);
+        }
+
+        .card-description p {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .attendees {
+            display: flex;
+            align-items: center;
+            background-color: var(--accent-3);
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+
+        .people-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 5px;
+            fill: var(--bg-primary);
+        }
+
+        .attendees-count {
+            color: var(--bg-primary);
+            font-size: 0.9em;
+        }
+
+        .interested-button {
+            background-color: var(--accent-1);
+            color: var(--bg-primary);
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        .interested-button:hover {
+            background-color: var(--accent-2);
+        }
+        .calendar-button {
+            background-color: var(--accent-1);
+            color: var(--bg-primary);
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        .calendar-button:hover {
+            background-color: var(--accent-2);
+        }
+
+        .row-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .row-container::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        .row-container::-webkit-scrollbar-thumb {
+            background: var(--accent-2);
+            border-radius: 4px;
+        }
+
+        .row-container::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-1);
+        }
+
+        .row-section {
+            margin-bottom: 30px;
+        }
+
+        .row-heading {
+            color: var(--accent-2);
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 5px ;
+            border-left: 5px solid var(--accent-2);
+            /* border-left: 4px solid var(--accent-2); */
+        }
+
+        .row-container {
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 15px;
+        }
+
+        .row {
+            display: flex;
+            gap: 20px;
+            padding: 10px 0;
+            width: max-content;
+        }
+
+        .row-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .row-content {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* @media (max-width: 1024px) {
+            .card {
+                width: 220px;
+                height: 100%;
+            }
+        } */
+
+        /* @media (max-width: 768px) {
+            .row {
+                gap: 15px;
+            }
+
+            .card {
+                width: 200px;
+                height: 100%;
+            }
+
+            .card-info {
+                padding: 10px;
+                height: 130px;
+            }
+
+            .card h3 {
+                font-size: 1.1em;
+            }
+        } */
+/* 
+        @media (max-width: 480px) {
+            .card {
+                width: 180px;
+                min-height: 240px;
+            }
+
+            .card-info {
+                height: 120px;
+            }
+
+            .card h3 {
+                font-size: 1em;
+            }
+
+            .card-buttons {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 5px;
+            }
+
+            .number-field, .interested-button {
+                height: 24px;
+            }
+
+            .number-value, .people-icon {
+                font-size: 0.8em;
+            }
+
+            .interested-button {
+                font-size: 0.7em;
+                padding: 3px 8px;
+            }
+        } */
+
+        .close-button {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .close-button:hover {
+            color: var(--accent-1);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .username {
+            color: var(--text-primary);
+        }
+
+        .profile-icon {
+            color: var(--accent-1);
+            font-size: 1.5em;
+            transition: color 0.3s ease;
+        }
+
+        .profile-icon:hover {
+            color: var(--accent-2);
+        }
+
+        .row-container {
+            position: relative;
+            margin-bottom: 30px;
+
+        }
+
+        .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 64, 129, 0.3);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.3s ease;
+        }
+
+        .scroll-button:hover {
+            background-color: rgba(255, 64, 129, 0.6);
+        }
+
+        .scroll-left {
+            left: 10px;
+        }
+
+        .scroll-right {
+            right: 10px;
+        }
+
+        .row-content {
+            margin: 0 50px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            position: relative; /* Add this */
+            min-height: 200px; /* Add this to ensure minimum height */
+        }
+
+        .row {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .row-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .row-header {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            margin-bottom: 15px;
+            margin-left: 60px;
+            
+        }
+
+        .reload-button {
+            background: none;
+            border: none;
+            color: var(--accent-2);
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 5px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .reload-button:hover {
+            transform: rotate(180deg);
+            color: var(--accent-1);
+        }
+/* 
+        .row-heading {
+            color: var(--accent-2);
+            font-size: 1.5em;
+            padding-left: 10px;
+            border-left: 4px solid var(--accent-2);
+            margin: 0;
+        } */
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .hamburger-menu {
+            position: relative;
+        }
+
+        .hamburger-icon {
+            font-size: 1.5em;
+            color: var(--accent-1);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .hamburger-icon:hover {
+            color: var(--accent-2);
+        }
+
+        .menu-items {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--bg-secondary);
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .menu-items.active {
+            display: block;
+        }
+
+        .menu-item {
+            display: block;
+            padding: 10px 20px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background-color: var(--accent-1);
+            color: var(--bg-primary);
+        }
+
+        .no-events-message {
+            width: 100%;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.2em;
+            padding: 20px;
+            background-color: var(--bg-secondary);
+            border-radius: 10px;
+            position: absolute; /* Add this */
+            top: 50%; /* Add this */
+            left: 50%; /* Add this */
+            transform: translate(-50%, -50%); /* Add this */
+        }
+
+        /* .row-heading {
+            color: var(--accent-2);
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--accent-2);
+        } */
+
+        .row-content {
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            position: relative;
+            min-height: 200px;
+        }
+
+        .scroll-left {
+            left: 10px;
+        }
+
+        .scroll-right {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>  
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-brand">
+                <img src="static/images/logo.png.jpg" alt="SceneIt Logo" class="navbar-logo">
+                <span>SceneIt!</span>
+            </div>
+            <div class="navbar-right">
+                <div class="user-profile">
+                    <span class="username">{{user.fullname}}</span>
+                    <i class="fas fa-user-circle profile-icon"></i>
+                </div>
+                <div class="hamburger-menu">
+                    <i class="fas fa-bars hamburger-icon"></i>
+                    <div class="menu-items">
+                        <!-- <a href="{{ url_for('update_events') }}" class="menu-item">Update Events</a> -->
+                        <a href="{{ url_for('logout') }}" class="menu-item">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="content">
+        <div class="row-container">
+            <div class="row-header">
+                <h2 class="row-heading">Upcoming Events</h2>
+                <!-- <button class="reload-button" onclick="reloadRow('row1')">
+                    <i class="fas fa-sync-alt"></i>
+                </button> -->
+            </div>
+            {% if upcoming_events %}
+            <button class="scroll-button scroll-left">&lt;</button>
+            <button class="scroll-button scroll-right">&gt;</button>
+            {% endif %}
+            <div class="row-content">
+                <div id="row1" class="row">
+                    {% if not upcoming_events %}
+                        <h3 class="no-events-message">NO EVENTS PRESENT!</h3>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row-container">
+            <div class="row-header">
+                <h2 class="row-heading">Ongoing Events</h2>
+            </div>
+            {% if  ongoing_events %}
+            <button class="scroll-button scroll-left">&lt;</button>
+            <button class="scroll-button scroll-right">&gt;</button>
+            {% endif %}
+            <div class="row-content">
+                <div id="row2" class="row">
+                    {% if not ongoing_events %}
+                        <h3 class="no-events-message">NO EVENTS PRESENT!</h3>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row-container">
+            <div class="row-header">
+                <h2 class="row-heading">Past Events</h2>
+            </div>
+            {% if feedback_items %}
+            <button class="scroll-button scroll-left">&lt;</button>
+            <button class="scroll-button scroll-right">&gt;</button>
+            {% endif %}
+            <div class="row-content">
+                <div id="row3" class="row">
+                    {% if not feedback_items %}
+                        <h3 class="no-events-message">NO EVENTS PRESENT!</h3>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p class="copyright"><span>&copy;</span> Made by A3S</p>
+            <p>Syntax Error 2024</p>
+        </div>
+    </footer>
+
+    <div id="cardOverlay" class="overlay">
+        <div class="expanded-card">
+            <div class="card-header">
+                <h3 class="card-title">Event</h3>
+                <div class="card-tags">
+                    <span class="card-tag">tag</span>
+                </div>
+                <button class="close-button">&times;</button>
+            </div>
+            <div class="card-subheader">
+                <span class="event-id">apj001</span>
+                <span class="event-date">29 Feb'24 12:01 AM</span>
+            </div>
+            <div class="card-description">
+                <h4>Description</h4>
+                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+            </div>
+            <div class="card-footer">
+                <div class="footer-left">
+                    <div class="attendees">
+                        <svg class="people-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                        <span class="attendees-count">123</span>
+                    </div>
+                </div>
+                <button class="interested-button">i'm interested!</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const upcomingEvents = {{upcoming_events | tojson | safe}};
+    const ongoingEvents = {{ongoing_events | tojson | safe}};
+    const feedbackItems = {{feedback_items | tojson | safe}};
+
+    function isValidTiming(timing) {
+        return timing !== "Not Specified" && /\d/.test(timing);
+    }
+
+    function getUniqueEvents(events) {
+        const uniqueEvents = [];
+        const seenEvents = new Set();
+
+        events.forEach(event => {
+            // Create a unique key for each event using name, date, and timing
+            const eventKey = `${event.name}-${event.date}-${event.timing}`;
+            if (!seenEvents.has(eventKey) && 
+                event.name !== "Not Specified" && 
+                event.name.trim() !== "" &&
+                isValidTiming(event.timing)) {
+                seenEvents.add(eventKey);
+                uniqueEvents.push(event);
+            }
+        });
+
+        return uniqueEvents;
+    }
+
+    function createCards(rowId, data) {
+        const row = document.getElementById(rowId);
+        row.innerHTML = ''; // Clear existing content
+
+        // Get unique events
+        const uniqueEvents = getUniqueEvents(data);
+
+        if (uniqueEvents.length === 0) {
+            row.innerHTML = '<h3 class="no-events-message">NO EVENTS PRESENT!</h3>';
+            return;
+        }
+
+        uniqueEvents.forEach((item, index) => {
+            const card = createCard(item, index);
+            row.appendChild(card);
+        });
+    }
+
+    function createCard(data, index) {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <div class="card-info">
+                <div class="card-title-row">
+                    <h3 title="${data.name}">${data.name}</h3>
+                    <span class="category">${data.type_}</span>
+                    <span class="category">${data.tag || 'No Tag'}</span>
+                </div>
+                <div class="card-details">
+                    <div class="event-time">
+                        <span class="event-date">${data.date} ${data.timing}</span>
+                        <span class="event-location ">${data.location || 'Location TBA'}</span>
+                    </div>
+                    
+                    ${data.description ? `<div class="event-description">${data.description.substring(0, 100)}...</div>` : ''}
+                </div>
+                <div class="card-footer">
+                    <div class="attendees">
+                        <svg class="people-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                        <span class="attendees-count">${data.interest_count}</span>
+                    </div>
+                    <button class="interested-button" onclick="toggleInterest(${data.id}, this, event)">${data.is_interested ? "Not Interested" : "I'm Interested!"}</button>
+                </div>
+            </div>
+        `;
+        card.dataset.cardData = JSON.stringify(data);
+        card.addEventListener('click', () => expandCard(JSON.parse(card.dataset.cardData)));
+        return card;
+    }
+
+    function expandCard(data) {
+        const overlay = document.getElementById('cardOverlay');
+        const expandedCard = overlay.querySelector('.expanded-card');
+        
+        expandedCard.querySelector('.card-title').textContent = data.name;
+        expandedCard.querySelector('.card-tag').textContent = data.tag || 'No Tag';
+        expandedCard.querySelector('.event-id').textContent = data.location;
+        expandedCard.querySelector('.event-date').textContent = `${data.date} ${data.timing}`;
+        expandedCard.querySelector('.card-description p').textContent = data.description;
+        expandedCard.querySelector('.attendees-count').textContent = data.interest_count;
+
+        // Update the interested button
+        const interestedButton = expandedCard.querySelector('.interested-button');
+        interestedButton.textContent = data.is_interested ? "Not Interested" : "I'm Interested!";
+        interestedButton.onclick = (event) => toggleInterest(data.id, interestedButton, event, true);
+
+        // Check if the calendar button already exists
+        let calendarButton = expandedCard.querySelector('.calendar-button');
+        
+        if (!calendarButton) {
+            // If the button doesn't exist, create and add it
+            calendarButton = document.createElement('button');
+            calendarButton.textContent = 'Add to Calendar';
+            calendarButton.className = 'calendar-button';
+            
+            const cardFooter = expandedCard.querySelector('.card-footer');
+            cardFooter.appendChild(calendarButton);
+        }
+        
+        // Update the onclick event with the new data
+        calendarButton.onclick = () => addToCalendar(data);
+
+        overlay.style.display = 'flex';
+
+        // Add event listener for the close button
+        const closeButton = expandedCard.querySelector('.close-button');
+        closeButton.addEventListener('click', () => {
+            overlay.style.display = 'none';
+        });
+    }
+
+    function addToCalendar(eventData) {
+        if (confirm('Do you want to add this event to your calendar?')) {
+            fetch('/add_to_calendar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    event_id: eventData.id,
+                    event_name: eventData.name,
+                    event_date: eventData.date,
+                    event_timing: eventData.timing
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Event added to your calendar successfully!');
+                } else {
+                    alert('Failed to add event to calendar. ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while adding the event to your calendar.');
+            });
+        }
+    }
+
+    function initializeScrollButtons() {
+        const scrollButtons = document.querySelectorAll('.scroll-button');
+        scrollButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const container = button.closest('.row-container');
+                const content = container.querySelector('.row-content');
+                const scrollDirection = button.classList.contains('scroll-left') ? -300 : 300;
+                content.scrollBy({ left: scrollDirection, behavior: 'smooth' });
+            });
+        });
+    }
+
+    function reloadRow(rowId) {
+        const row = document.getElementById(rowId);
+        row.innerHTML = ''; // Clear existing cards
+        
+        let data;
+        switch(rowId) {
+            case 'row1':
+                data = upcomingEvents;
+                break;
+            case 'row2':
+                data = ongoingEvents;
+                break;
+            case 'row3':
+                data = feedbackItems;
+                break;
+        }
+        
+        createCards(rowId, data);
+    }
+
+    window.onload = () => {
+        createCards('row1', upcomingEvents);
+        createCards('row2', ongoingEvents);
+        createCards('row3', feedbackItems);
+        initializeScrollButtons();
+    };
+
+    // Hamburger menu functionality
+    const hamburgerIcon = document.querySelector('.hamburger-icon');
+    const menuItems = document.querySelector('.menu-items');
+
+    hamburgerIcon.addEventListener('click', function(event) {
+        event.stopPropagation();
+        menuItems.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!menuItems.contains(event.target) && !hamburgerIcon.contains(event.target)) {
+            menuItems.classList.remove('active');
+        }
+    });
+
+    // Add click event listeners to all cards
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', () => {
+            const data = {
+                name: card.querySelector('h3').textContent,
+                category: card.querySelector('.category').textContent,
+                tag: card.querySelector('.tag').textContent,
+                id: card.querySelector('.event-id').textContent,
+                dateTime: card.querySelector('.event-date').textContent,
+                description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+                attendees: card.querySelector('.attendees-count').textContent
+            };
+            expandCard(data);
+        });
+    });
+
+    // Close overlay when clicking outside the card
+    document.getElementById('cardOverlay').addEventListener('click', (event) => {
+        if (event.target === event.currentTarget) {
+            event.currentTarget.style.display = 'none';
+        }
+    });
+
+    // Remove the close button event listener when the overlay is hidden
+    const overlay = document.getElementById('cardOverlay');
+    overlay.addEventListener('transitionend', () => {
+        if (overlay.style.display === 'none') {
+            const closeButton = overlay.querySelector('.close-button');
+            closeButton.removeEventListener('click', null);
+        }
+    });
+
+    function toggleInterest(eventId, button, event, isExpanded = false) {
+        event.stopPropagation(); // Prevent the card from expanding when clicking the button
+        
+        fetch(`/mark_interest/${eventId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token() }}'
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update the button text
+                button.textContent = data.interested ? "Not Interested" : "I'm Interested!";
+                
+                // Update the attendees count
+                let attendeesCount;
+                if (isExpanded) {
+                    attendeesCount = document.querySelector('.expanded-card .attendees-count');
+                } else {
+                    const card = button.closest('.card');
+                    attendeesCount = card.querySelector('.attendees-count');
+                    
+                    // Update the data for the expanded card view
+                    const cardData = JSON.parse(card.dataset.cardData);
+                    cardData.is_interested = data.interested;
+                    cardData.interest_count = data.interest_count;
+                    card.dataset.cardData = JSON.stringify(cardData);
+                }
+                attendeesCount.textContent = data.interest_count;
+                
+                // Update all instances of this event card
+                updateAllEventCards(eventId, data.interested, data.interest_count);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    function updateAllEventCards(eventId, isInterested, interestCount) {
+        const allCards = document.querySelectorAll('.card');
+        allCards.forEach(card => {
+            const cardData = JSON.parse(card.dataset.cardData);
+            if (cardData.id === eventId) {
+                cardData.is_interested = isInterested;
+                cardData.interest_count = interestCount;
+                card.dataset.cardData = JSON.stringify(cardData);
+                
+                const button = card.querySelector('.interested-button');
+                button.textContent = isInterested ? "Not Interested" : "I'm Interested!";
+                
+                const attendeesCount = card.querySelector('.attendees-count');
+                attendeesCount.textContent = interestCount;
+            }
+        });
+    }
+</script>
+
+
+</body>
+</html>
