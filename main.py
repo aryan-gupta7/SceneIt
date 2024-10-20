@@ -11,6 +11,8 @@ import analyse
 import re
 import os
 from sqlalchemy.sql import func
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
 
 import quickstart
 creds = quickstart.get_credentials()
@@ -21,7 +23,7 @@ service = quickstart.build("calendar", "v3", credentials=creds)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24).hex()
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@localhost/www'
+app.config['SQLALCHEMY_DATABASE_URI'] = ''
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 csrf = CSRFProtect(app)
 
@@ -115,6 +117,16 @@ class RegistrationForm(FlaskForm):
             raise ValidationError("Password must contain at least one uppercase letter.")
         if not re.search("[0-9]", password.data):
             raise ValidationError("Password must contain at least one number.")
+
+def schedule_event_updates():
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(
+        func=process_and_add_events,
+        trigger=CronTrigger(hour='0,12'),  # Run at 12 AM and 12 PM
+        id='update_events_job',
+        name='Update events twice daily',
+        replace_existing=True)
+    scheduler.start()
 
 def process_and_add_events():
     emails = mail_scraper.get_mail_content(max_results=100)
@@ -345,7 +357,8 @@ def mark_interest(event_id):
 @app.route('/update_events')
 def update_events():
     process_and_add_events()
-    flash('Events have been updated from emails.', 'success')
+    schedule_event_updates()
+    flash('Events have been updated from emails and scheduled for regular updates.', 'success')
     return redirect(url_for('home'))
 
 # @app.route('/get_upcoming_events')
@@ -404,11 +417,12 @@ def check_username():
     user = User.query.filter_by(username=username).first()
     return jsonify({'available': user is None})
 
+with app.app_context():
+    db.create_all()
+    schedule_event_updates()
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    # app.run(host = "0.0.0.0", debug=True)
-    app.run(host = "0.0.0.0", debug=True)
+    app.run()
 
 
 

@@ -31,13 +31,30 @@ SceneIt provides a centralized platform for event management and discovery. The 
 
 ## Technologies Used
 
-[List the main technologies, frameworks, and libraries used in SceneIt]
+1. Flask Framework(Python)
+2. SQLAlchemy(Python)
+3. WTForms(Python)
+4. Gmail API
+5. Google Calendar API
+6. Javascript
+7. HTML/CSS
+8. GROQ LLAMA 3.1 70b
+
 
 ## Setup and Installation
 
-[Provide step-by-step instructions on how to set up and run SceneIt locally]
 
-## Usage
+### 1. Clone this repo or install zip.
+`git clone https://github.com/aryan-gupta7/SceneIt`
+### 2. Install the required libraries by
+`pip install -r requirements.txt`
+### 3. Get credentials.json and keys.json
+`credentials.json` is a json file that has creds that are used to fetch mails using Gmail API and Add events using Calendar API. This can be found in the Google Clound Console Setup for a project and `keys.json` is a json file that has GROQ API for LLAMA Model which can be easily obtained by logging into GROQ's website
+### 4. Setup Database
+Make sure your system has a database system install, may it be MySQL, SQLite or PostgreSQL. After setting up, add the DATABASE_URI to the `main.py`.
+### 5. You are good to go.
+While running for the first time, you can go to localhost:port/update_events to fetch the events.
+
 
 ## Usage
 
@@ -93,14 +110,5 @@ After logging in, you'll be directed to the home page ([url]), which displays:
 - SceneIt will send notifications about events matching your interests.
 - Make sure to enable notifications in your account settings or browser to receive these alerts.
 
-## Contributing
 
-[Provide guidelines for how others can contribute to SceneIt]
 
-## License
-
-[Specify the license under which SceneIt is released]
-
-## Contact
-
-[Provide contact information or links for users to reach out with questions or feedback about SceneIt]
